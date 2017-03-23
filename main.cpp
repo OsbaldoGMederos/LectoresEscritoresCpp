@@ -8,7 +8,7 @@
 
 using namespace std;
 
-mutex coutMutex;
+mutex escritorMutex;
 
 int main(){
 
@@ -19,14 +19,16 @@ int main(){
 		i = 0;
 	}
 
-	Escritor osba(coutMutex, contador, a);
+	Escritor osba("osbaldo", escritorMutex, contador, a);
+	Escritor marco("marco", escritorMutex, contador, a);
+	Escritor sunny("sunny", escritorMutex, contador, a);
+
+	Lector desiree("desiree", escritorMutex, a);
+	Lector maribel("maribel", escritorMutex, a);
+	Lector dani("dani", escritorMutex, a);
+
 
 	this_thread::sleep_for(chrono::seconds(1));
-
-	for(int& i : a){
-		cout << i << endl;
-	}
-	return 0;
 }
 
 
