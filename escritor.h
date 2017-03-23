@@ -6,23 +6,23 @@
 #include <mutex>
 #include <chrono>
 #include <string>
-#include <random>
 #include <ctime>
-
+#include <random>
 
 class Escritor{
 
 private:
 
 	const std::string nombre;
+	const std::string color;
 	std::mutex& cm;
 	int& producto;
 	int *bufferPtr;
 	std::thread trabajador;
 
 public:
-	Escritor(std::string n, std::mutex& c, int& p, int buffer[])
-		:nombre(n), cm(c), producto(p), bufferPtr(buffer), trabajador(&Escritor::iniciar, this){}
+	Escritor(std::string n, std::string col, std::mutex& c, int& p, int buffer[])
+		:nombre(n), color(col), cm(c), producto(p), bufferPtr(buffer), trabajador(&Escritor::iniciar, this){}
 
 	~Escritor(){
 		trabajador.join();
