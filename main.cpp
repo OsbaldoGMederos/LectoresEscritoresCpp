@@ -3,38 +3,30 @@
 #include <mutex>
 #include <chrono>
 
+#include "lector.h"
+#include "escritor.h"
+
 using namespace std;
 
 mutex coutMutex;
 
-class Lector{
-private:
-	mutex& cm;
-	thread trabajador;
-
-public:
-	Lector(mutex& c)
-		:cm(c), trabajador(&Lector::iniciar, this){}
-
-	~Lector(){
-		trabajador.join();
-	}
-
-	void iniciar();
-	
-};
-
-
-void Lector::iniciar(){
-	lock_guard<mutex> cm(coutMutex);
-	cout << "Hola mundo" << endl;
-}
-
 int main(){
 
-	
-	Lector osbaldo(coutMutex);
+	int a[10];
+	int contador = 0;
 
+	for(int& i : a){
+		i = 0;
+	}
+
+	Escritor osba(coutMutex, contador, a);
+
+	this_thread::sleep_for(chrono::seconds(1));
+
+	for(int& i : a){
+		cout << i << endl;
+	}
 	return 0;
 }
+
 
